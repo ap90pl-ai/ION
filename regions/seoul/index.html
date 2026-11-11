@@ -256,11 +256,9 @@ body.modal-open{overflow:hidden}
  const title=document.getElementById('tutorResultTitle');
  if(!input||!button||!results||!title)return;
  const districts=['강남구','서초구','송파구','강동구','양천구','강서구','노원구','마포구','광진구','관악구','성북구','은평구','동작구','영등포구','구로구','중랑구','동대문구','성동구','서대문구','용산구','강북구','도봉구','금천구','종로구','중구'];
- const aliases={'대치동':'강남구','역삼동':'강남구','삼성동':'강남구','청담동':'강남구','반포동':'서초구','잠원동':'서초구','서초동':'서초구','잠실동':'송파구','문정동':'송파구','가락동':'송파구','천호동':'강동구','명일동':'강동구','목동':'양천구','신정동':'양천구','마곡동':'강서구','화곡동':'강서구','중계동':'노원구','상계동':'노원구','공덕동':'마포구','상암동':'마포구','연남동':'마포구','자양동':'광진구','구의동':'광진구','신림동':'관악구','봉천동':'관악구','길음동':'성북구','정릉동':'성북구','응암동':'은평구','상도동':'동작구','노량진동':'동작구','여의도동':'영등포구','당산동':'영등포구','신도림동':'구로구','상봉동':'중랑구','청량리동':'동대문구','왕십리':'성동구','행당동':'성동구','신촌동':'서대문구','한남동':'용산구','미아동':'강북구','수유동':'강북구','창동':'도봉구','독산동':'금천구','혜화동':'종로구','신당동':'중구'};
+ const aliases={'행당동':'성동구','마장동':'성동구','상왕십리동':'성동구','응봉동':'성동구','답십리동':'동대문구','대치동':'강남구','역삼동':'강남구','삼성동':'강남구','청담동':'강남구','반포동':'서초구','잠원동':'서초구','서초동':'서초구','잠실동':'송파구','문정동':'송파구','가락동':'송파구','천호동':'강동구','명일동':'강동구','목동':'양천구','신정동':'양천구','마곡동':'강서구','화곡동':'강서구','중계동':'노원구','상계동':'노원구','공덕동':'마포구','상암동':'마포구','연남동':'마포구','자양동':'광진구','구의동':'광진구','신림동':'관악구','봉천동':'관악구','길음동':'성북구','정릉동':'성북구','응암동':'은평구','상도동':'동작구','노량진동':'동작구','여의도동':'영등포구','당산동':'영등포구','신도림동':'구로구','상봉동':'중랑구','청량리동':'동대문구','왕십리':'성동구','행당동':'성동구','신촌동':'서대문구','한남동':'용산구','미아동':'강북구','수유동':'강북구','창동':'도봉구','독산동':'금천구','혜화동':'종로구','신당동':'중구'};
  const samples=[
-  {name:'수학 전문 선생님',major:'중등 수학 · 고등 수학',career:'개념 이해부터 내신·심화 대비',method:'방문 · 화상 수업',icon:'∑'},
-  {name:'영어 전문 선생님',major:'초등 영어 · 중등 영어',career:'기초 문법부터 독해·학교 시험 대비',method:'방문 · 화상 수업',icon:'A'},
-  {name:'국어 전문 선생님',major:'중등 국어 · 고등 국어',career:'교과 개념과 독해력 중심 맞춤 지도',method:'방문 · 화상 수업',icon:'文'}
+  {name:'박○현 선생님',major:'수학',grade:'중3~고3',career:'과외 경력 8년',method:'방문 · 화상 수업',areas:'성동구 행당동 · 마장동 · 상왕십리동 · 응봉동 / 동대문구 답십리동',schools:'성동고 · 도선고 · 한대부고 · 무학여고 · 해성여고 · 청량고 · 경희고',intro:'외고·자사고·일반고 내신 및 수행평가 대비가 가능하며, 학생별 맞춤 과제로 효율적인 학습 방법을 제시합니다. 다양한 성적 향상 노하우를 바탕으로 지도합니다.',icon:'박'}
  ];
  function search(){
   const q=input.value.trim().replace(/\\s/g,'');
@@ -269,7 +267,9 @@ body.modal-open{overflow:hidden}
   if(!district)district=aliases[q]||districts.find(x=>q.includes(x)||x.includes(q));
   if(!district){title.textContent='검색 결과';results.innerHTML='<div class="tutor-empty"><strong>검색한 지역을 찾지 못했어요.</strong><p>서울의 구 이름이나 대표 동네 이름으로 다시 검색해 주세요.</p></div>';return;}
   title.textContent=district+' 선생님';
-  results.innerHTML=samples.map(t=>'<article class="tutor-card"><div class="tutor-card-top"><div class="tutor-avatar">'+t.icon+'</div><div><h4>'+t.name+'</h4><div class="tutor-sub">'+district+' 수업 가능 여부 상담</div></div></div><p>'+t.career+'</p><div class="tutor-tags"><span>'+t.major+'</span><span>'+t.method+'</span></div><span class="tutor-detail">프로필 상세 정보 · 실제 등록 자료로 교체 예정</span></article>').join('');
+  const matched=samples.filter(t=>t.areas.includes(district));
+  if(!matched.length){results.innerHTML='<div class="tutor-empty"><strong>'+district+' 등록 선생님을 준비 중입니다.</strong><p>현재 등록된 선생님이 없어요. 다른 지역을 검색해 주세요.</p></div>';return;}
+  results.innerHTML=matched.map(t=>'<article class="tutor-card"><div class="tutor-card-top"><div class="tutor-avatar">'+t.icon+'</div><div><h4>'+t.name+'</h4><div class="tutor-sub">'+t.major+' 전문 · '+t.grade+'</div><div class="tutor-sub">'+t.career+'</div></div></div><div class="tutor-tags"><span>'+t.method+'</span><span>'+district+' 수업 가능</span></div><p><strong>수업 가능 지역</strong><br>'+t.areas+'</p><p><strong>집중 관리 학교</strong><br>'+t.schools+'</p><p>'+t.intro+'</p><span class="tutor-detail">무료 상담을 통해 수업 가능 일정과 세부 내용을 확인해 주세요.</span></article>').join('');
  }
  button.addEventListener('click',search);
  input.addEventListener('keydown',e=>{if(e.key==='Enter')search();});
