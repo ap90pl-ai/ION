@@ -147,7 +147,7 @@ body.modal-open{overflow:hidden}
         <div class="field"><label for="student">학생 이름 <em>*</em></label><input id="student" name="student" required placeholder="학생 이름"></div>
         <div class="field"><label for="phone">연락처 <em>*</em></label><input id="phone" name="phone" required inputmode="tel" placeholder="010-0000-0000"></div>
         <div class="field"><label for="grade">학년 <em>*</em></label><select id="grade" name="grade" required><option value="">선택</option><option>초등</option><option>중등</option><option>고등</option></select></div>
-        <div class="field"><label for="gradeDetail">학년 상세</label><select id="gradeDetail" name="gradeDetail"><option value="">학년 선택</option><option>1학년</option><option>2학년</option><option>3학년</option><option>4학년</option><option>5학년</option><option>6학년</option></select></div>
+        <div class="field"><label for="gradeDetail">학년 상세</label><select id="gradeDetail" name="gradeDetail"><option value="">학년 선택</option></select></div>
         <div class="field full"><label>과목 <span>(선택, 복수 가능)</span></label><div class="subject-options">
           <label><input type="checkbox" name="subjects" value="국어"> 국어</label><label><input type="checkbox" name="subjects" value="영어"> 영어</label><label><input type="checkbox" name="subjects" value="수학"> 수학</label><label><input type="checkbox" name="subjects" value="사회"> 사회</label><label><input type="checkbox" name="subjects" value="과학"> 과학</label>
         </div></div>
@@ -169,6 +169,20 @@ const openConsult=()=>{consultModal.classList.add('is-open');consultModal.setAtt
 const closeConsult=()=>{consultModal.classList.remove('is-open');consultModal.setAttribute('aria-hidden','true');document.body.classList.remove('modal-open');};
 document.getElementById('openConsult').addEventListener('click',openConsult);
 document.getElementById('closeConsult').addEventListener('click',closeConsult);
+const gradeSelect=document.getElementById('grade');
+const gradeDetailSelect=document.getElementById('gradeDetail');
+gradeSelect.addEventListener('change',()=>{
+  const selected=gradeSelect.value;
+  const maxGrade=selected==='초등'?6:(selected==='중등'||selected==='고등'?3:0);
+  gradeDetailSelect.innerHTML='<option value="">학년 선택</option>';
+  for(let i=1;i<=maxGrade;i++){
+    const option=document.createElement('option');
+    option.value=i+'학년';
+    option.textContent=i+'학년';
+    gradeDetailSelect.appendChild(option);
+  }
+  gradeDetailSelect.value='';
+});
 consultModal.addEventListener('click',e=>{if(e.target===consultModal)closeConsult();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&consultModal.classList.contains('is-open'))closeConsult();});
 const addressInput=document.getElementById('address');
