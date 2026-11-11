@@ -197,6 +197,10 @@ body.modal-open{overflow:hidden}
 }
 
 .tuition-section{padding:34px 0 54px;background:var(--soft)}.tuition-card{max-width:850px;margin:0 auto;padding:27px 32px;background:#fff;border:1px solid #dceaf5;border-radius:14px;box-shadow:0 10px 28px rgba(37,119,190,.06);text-align:left}.tuition-label{font-size:11px;letter-spacing:.16em;color:var(--blue2);font-weight:900}.tuition-card h2{font-size:clamp(23px,3vw,30px);line-height:1.4;letter-spacing:-.05em;margin:7px 0 10px}.tuition-lead{font-size:14px;font-weight:750;color:#385c79;margin:0 0 7px}.tuition-description{font-size:13px;color:var(--muted);margin:0;line-height:1.8}@media(max-width:600px){.tuition-section{padding:26px 0 40px}.tuition-card{padding:23px 18px}.tuition-lead{font-size:13px}.tuition-description{font-size:12px}}
+
+/* Tuition card: force left alignment for every text element */
+#tuition .tuition-card,
+#tuition .tuition-card *{text-align:left!important}
 </style>
 </head>
 <body>
