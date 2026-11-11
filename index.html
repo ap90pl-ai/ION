@@ -80,7 +80,7 @@
 .modal-form .agree{font-size:12px;line-height:1.7}
 .modal-form .btn{min-height:54px;border-radius:9px;font-size:16px}
 body.modal-open{overflow:hidden}
-@media(max-width:600px){.modal-backdrop{padding:10px;align-items:center}.consult-modal{max-height:calc(100vh - 20px);padding:18px 16px 20px;border-radius:15px}.modal-head h2{font-size:20px}.modal-form .form-grid{grid-template-columns:1fr 1fr;gap:13px 10px}.modal-form .field input,.modal-form .field select{min-height:47px;padding:11px;font-size:13px}.modal-form .field.full{grid-column:1/-1}.subject-options{gap:6px}.subject-options label{padding:8px 10px;font-size:12px!important}}
+@media(max-width:600px){.modal-form .field input,.modal-form .field select,.modal-form .field textarea{font-size:16px!important}.modal-backdrop{padding:10px;align-items:center}.consult-modal{max-height:calc(100vh - 20px);padding:18px 16px 20px;border-radius:15px}.modal-head h2{font-size:20px}.modal-form .form-grid{grid-template-columns:1fr 1fr;gap:13px 10px}.modal-form .field input,.modal-form .field select{min-height:47px;padding:11px;font-size:13px}.modal-form .field.full{grid-column:1/-1}.subject-options{gap:6px}.subject-options label{padding:8px 10px;font-size:12px!important}}
 </style>
 </head>
 <body>
@@ -165,7 +165,7 @@ body.modal-open{overflow:hidden}
 <script src="https://t1.kakaocdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
 const consultModal=document.getElementById('consultModal');
-const openConsult=()=>{consultModal.classList.add('is-open');consultModal.setAttribute('aria-hidden','false');document.body.classList.add('modal-open');document.getElementById('student').focus();};
+const openConsult=()=>{consultModal.classList.add('is-open');consultModal.setAttribute('aria-hidden','false');document.body.classList.add('modal-open');};
 const closeConsult=()=>{consultModal.classList.remove('is-open');consultModal.setAttribute('aria-hidden','true');document.body.classList.remove('modal-open');};
 document.getElementById('openConsult').addEventListener('click',openConsult);
 document.getElementById('closeConsult').addEventListener('click',closeConsult);
