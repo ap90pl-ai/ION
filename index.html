@@ -156,6 +156,8 @@ body.modal-open{overflow:hidden}
         <div class="field full"><label for="school">학교명</label><input id="school" name="school" placeholder="예: ○○중학교 (선택)"></div>
         <div class="field full"><label for="memo">현재 학습 고민 및 문의 내용</label><textarea id="memo" name="memo" placeholder="학습 목표, 희망 수업 시간 등을 적어주세요."></textarea></div>
         <div class="field"><label for="type">희망 수업 방식</label><select id="type" name="type"><option>상담 후 결정</option><option>방문 과외</option><option>화상 과외</option><option>모두 가능</option></select></div>
+        <div class="field"><label for="consultDate">상담 가능한 날짜</label><input type="date" id="consultDate" name="consultDate"></div>
+        <div class="field"><label for="consultTime">상담 가능한 시간</label><select id="consultTime" name="consultTime"><option value="">시간 선택</option><option>오전 9시~12시</option><option>오후 12시~3시</option><option>오후 3시~6시</option><option>오후 6시~9시</option><option>시간 협의 가능</option></select></div>
       </div>
       <label class="agree"><input type="checkbox" required><span>상담을 위한 개인정보 수집·이용에 동의합니다.</span></label>
       <button class="btn" type="submit">무료 상담 신청하기</button>
@@ -214,7 +216,7 @@ addressSearch.addEventListener('click',()=>{
     postcodeLoaded=true;
   }
 });
-document.getElementById('consultForm').addEventListener('submit',function(e){e.preventDefault();const d=new FormData(this);const selectedSubjects=d.getAll('subjects');const other=d.get('otherSubject').trim();if(other)selectedSubjects.push('기타: '+other);const subjects=selectedSubjects.filter(x=>x!=='기타').join(', ')||'미선택';alert('현재는 홈페이지 디자인 시안입니다. 실제 상담 접수는 별도 접수 시스템 연결 후 활성화됩니다.\\n\\n학생: '+d.get('student')+'\\n연락처: '+d.get('phone')+'\\n학년: '+d.get('grade')+' '+(d.get('gradeDetail')||'')+'\\n과목: '+subjects+'\\n주소: '+d.get('address')+' '+(d.get('addressDetail')||''));});
+document.getElementById('consultForm').addEventListener('submit',function(e){e.preventDefault();const d=new FormData(this);const selectedSubjects=d.getAll('subjects');const other=d.get('otherSubject').trim();if(other)selectedSubjects.push('기타: '+other);const subjects=selectedSubjects.filter(x=>x!=='기타').join(', ')||'미선택';alert('현재는 홈페이지 디자인 시안입니다. 실제 상담 접수는 별도 접수 시스템 연결 후 활성화됩니다.\\n\\n학생: '+d.get('student')+'\\n연락처: '+d.get('phone')+'\\n학년: '+d.get('grade')+' '+(d.get('gradeDetail')||'')+'\\n과목: '+subjects+'\\n주소: '+d.get('address')+' '+(d.get('addressDetail')||'')+'\\n상담 가능 날짜: '+(d.get('consultDate')||'미정')+'\\n상담 가능 시간: '+(d.get('consultTime')||'미정'));});
 </script>
 </body>
 </html>
