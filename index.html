@@ -76,6 +76,7 @@
 .subject-options label{display:flex;align-items:center;gap:7px;border:1px solid #dce5ee;border-radius:30px;padding:9px 14px;cursor:pointer;font-size:14px!important}
 .subject-options input{accent-color:#0878ed;width:16px;height:16px;min-height:0!important}
 .address-search{width:100%;padding:12px 15px;border:1px solid #c9e0ff;border-radius:9px;background:#eef6ff;color:#075fc4;text-align:left;cursor:pointer;font-size:14px}
+.postcode-wrap{width:100%;height:430px;margin-top:10px;border:1px solid #d7e3f0;border-radius:10px;overflow:hidden;background:#fff}.postcode-wrap[hidden]{display:none}.postcode-wrap iframe{width:100%!important;min-width:0!important}
 .modal-form .agree{font-size:12px;line-height:1.7}
 .modal-form .btn{min-height:54px;border-radius:9px;font-size:16px}
 body.modal-open{overflow:hidden}
@@ -150,7 +151,7 @@ body.modal-open{overflow:hidden}
         <div class="field full"><label>과목 <span>(선택, 복수 가능)</span></label><div class="subject-options">
           <label><input type="checkbox" name="subjects" value="국어"> 국어</label><label><input type="checkbox" name="subjects" value="영어"> 영어</label><label><input type="checkbox" name="subjects" value="수학"> 수학</label><label><input type="checkbox" name="subjects" value="사회"> 사회</label><label><input type="checkbox" name="subjects" value="과학"> 과학</label>
         </div></div>
-        <div class="field full"><label for="address">주소 <em>*</em></label><input id="address" name="address" required placeholder="도로명 주소 (검색 클릭)" readonly><button type="button" class="address-search" id="addressSearch">주소 검색</button><input id="addressDetail" name="addressDetail" placeholder="상세주소 (동·호수 등)"></div>
+        <div class="field full"><label for="address">주소 <em>*</em></label><input id="address" name="address" required placeholder="도로명 주소 (주소 검색을 눌러 선택)" readonly><button type="button" class="address-search" id="addressSearch" aria-expanded="false">주소 검색</button><div id="postcodeWrap" class="postcode-wrap" hidden></div><input id="addressDetail" name="addressDetail" placeholder="상세주소 (동·호수 등)"></div>
         <div class="field full"><label for="school">학교명</label><input id="school" name="school" placeholder="예: ○○중학교 (선택)"></div>
         <div class="field full"><label for="memo">현재 학습 고민 및 문의 내용</label><textarea id="memo" name="memo" placeholder="학습 목표, 희망 수업 시간 등을 적어주세요."></textarea></div>
         <div class="field"><label for="type">희망 수업 방식</label><select id="type" name="type"><option>상담 후 결정</option><option>방문 과외</option><option>화상 과외</option><option>모두 가능</option></select></div>
@@ -161,6 +162,7 @@ body.modal-open{overflow:hidden}
     </form>
   </section>
 </div><footer class="footer"><div class="container"><a class="brand" href="#home">이온<b>과외</b></a><p>초등 · 중등 · 고등 전국 1:1 맞춤 과외 상담</p><div class="footer-bottom">© 2026 이온과외. All rights reserved. · 사업자 및 운영자 정보는 실제 운영 정보 확정 후 기재해 주세요.</div></div></footer>
+<script src="https://t1.kakaocdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
 const consultModal=document.getElementById('consultModal');
 const openConsult=()=>{consultModal.classList.add('is-open');consultModal.setAttribute('aria-hidden','false');document.body.classList.add('modal-open');document.getElementById('student').focus();};
@@ -169,9 +171,28 @@ document.getElementById('openConsult').addEventListener('click',openConsult);
 document.getElementById('closeConsult').addEventListener('click',closeConsult);
 consultModal.addEventListener('click',e=>{if(e.target===consultModal)closeConsult();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&consultModal.classList.contains('is-open'))closeConsult();});
-document.getElementById('addressSearch').addEventListener('click',()=>alert('주소 검색 기능은 주소 검색 API 연결 후 사용할 수 있습니다. 우선 도로명 주소를 직접 입력해 주세요.'));
-document.getElementById('address').readOnly=false;
-document.getElementById('consultForm').addEventListener('submit',function(e){e.preventDefault();const d=new FormData(this);const subjects=d.getAll('subjects').join(', ')||'미선택';alert('현재는 홈페이지 디자인 시안입니다. 실제 상담 접수는 별도 접수 시스템 연결 후 활성화됩니다.\\n\\n학생: '+d.get('student')+'\\n연락처: '+d.get('phone')+'\\n학년: '+d.get('grade')+' '+(d.get('gradeDetail')||'')+'\\n과목: '+subjects+'\\n주소: '+d.get('address'));});
+const addressInput=document.getElementById('address');
+const addressSearch=document.getElementById('addressSearch');
+const postcodeWrap=document.getElementById('postcodeWrap');
+let postcodeLoaded=false;
+addressSearch.addEventListener('click',()=>{
+  if(typeof kakao==='undefined'||!kakao.Postcode){alert('주소 검색 서비스를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.');return;}
+  postcodeWrap.hidden=false;
+  addressSearch.setAttribute('aria-expanded','true');
+  if(!postcodeLoaded){
+    new kakao.Postcode({
+      oncomplete:function(data){
+        addressInput.value=data.roadAddress||data.jibunAddress;
+        postcodeWrap.hidden=true;
+        addressSearch.setAttribute('aria-expanded','false');
+        document.getElementById('addressDetail').focus();
+      },
+      onresize:function(size){postcodeWrap.style.height=size.height+'px';}
+    }).embed(postcodeWrap);
+    postcodeLoaded=true;
+  }
+});
+document.getElementById('consultForm').addEventListener('submit',function(e){e.preventDefault();const d=new FormData(this);const subjects=d.getAll('subjects').join(', ')||'미선택';alert('현재는 홈페이지 디자인 시안입니다. 실제 상담 접수는 별도 접수 시스템 연결 후 활성화됩니다.\\n\\n학생: '+d.get('student')+'\\n연락처: '+d.get('phone')+'\\n학년: '+d.get('grade')+' '+(d.get('gradeDetail')||'')+'\\n과목: '+subjects+'\\n주소: '+d.get('address')+' '+(d.get('addressDetail')||''));});
 </script>
 </body>
 </html>
