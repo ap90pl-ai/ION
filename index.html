@@ -96,29 +96,31 @@ body.modal-open{overflow:hidden}
 
 .consult-trigger{text-align:center}.consult-process{text-align:left}
 
-/* Consistent four-card layouts */
+/* Unified four-card layout across the three sections */
 #reason .two-col,
 #method .cards,
-#process .steps{align-items:stretch}
+#process .steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;align-items:stretch}
 #reason .feature,
 #method .card,
-#process .step{box-sizing:border-box;min-width:0;height:100%;min-height:230px;display:flex;flex-direction:column;align-items:flex-start;text-align:left}
+#process .step{box-sizing:border-box;min-width:0;min-height:250px;height:100%;margin:0;padding:24px 20px;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;text-align:left;background:#fff;border:1px solid var(--line);border-radius:8px}
+#reason .feature .n,
+#method .card .n,
+#process .step small{min-height:1.5em;display:block}
 #reason .feature h3,
 #method .card h3,
-#process .step h3{width:100%;min-height:2.9em;display:flex;align-items:flex-start;text-align:left}
+#process .step h3{width:100%;min-height:3em;margin:11px 0 8px;display:block;text-align:left;line-height:1.45}
 #reason .feature p,
 #method .card p,
-#process .step p{width:100%;text-align:left;line-height:1.75}
-#process .step{justify-content:flex-start}
+#process .step p{width:100%;margin:0;text-align:left;line-height:1.75}
 @media(max-width:820px){
- #reason .feature,#method .card,#process .step{min-height:220px}
+ #reason .two-col,#method .cards,#process .steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #reason .feature,#method .card,#process .step{min-height:230px}
 }
 @media(max-width:540px){
  #reason .two-col,#method .cards,#process .steps{grid-template-columns:1fr}
  #reason .feature,#method .card,#process .step{min-height:0;height:auto}
  #reason .feature h3,#method .card h3,#process .step h3{min-height:0}
 }
-
 </style>
 </head>
 <body>
