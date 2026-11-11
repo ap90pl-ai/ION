@@ -164,9 +164,10 @@ body.modal-open{overflow:hidden}
 @media(max-width:640px){.review-slide{grid-template-columns:1fr}.review-image-placeholder{min-height:235px;padding:20px}.review-placeholder-paper{min-height:160px;padding:18px}.review-copy{padding:25px 22px}.review-copy h3{font-size:18px}.review-copy p{font-size:13px}}
 
 
-/* Hide review carousel arrow controls; keep pagination dots */
-.review-controls .review-arrow{display:none}
-.review-controls{gap:0}
+/* Show review carousel arrows on desktop only */
+.review-controls .review-arrow{display:inline-flex;align-items:center;justify-content:center;flex:0 0 38px}
+.review-controls{gap:18px}
+@media(max-width:640px){.review-controls .review-arrow{display:none}.review-controls{gap:0}}
 
 </style>
 </head>
