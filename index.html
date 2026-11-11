@@ -161,7 +161,7 @@ body.modal-open{overflow:hidden}
       </div>
       <label class="agree"><input type="checkbox" required><span>상담을 위한 개인정보 수집·이용에 동의합니다.</span></label>
       <button class="btn" type="submit">무료 상담 신청하기</button>
-      <p class="form-note" id="formNote">현재는 홈페이지 시안입니다. 실제 상담 접수는 별도 접수 시스템 연결 후 활성화됩니다.</p>
+      <p class="form-note" id="formNote">필수 항목을 입력하고 상담 신청을 완료해 주세요.</p>
     </form>
   </section>
 </div><footer class="footer"><div class="container"><a class="brand" href="#home">이온<b>과외</b></a><p>초등 · 중등 · 고등 전국 1:1 맞춤 과외 상담</p><div class="footer-bottom">© 2026 이온과외. All rights reserved. · 사업자 및 운영자 정보는 실제 운영 정보 확정 후 기재해 주세요.</div></div></footer>
@@ -216,7 +216,54 @@ addressSearch.addEventListener('click',()=>{
     postcodeLoaded=true;
   }
 });
-document.getElementById('consultForm').addEventListener('submit',function(e){e.preventDefault();const d=new FormData(this);const selectedSubjects=d.getAll('subjects');const other=d.get('otherSubject').trim();if(other)selectedSubjects.push('기타: '+other);const subjects=selectedSubjects.filter(x=>x!=='기타').join(', ')||'미선택';alert('현재는 홈페이지 디자인 시안입니다. 실제 상담 접수는 별도 접수 시스템 연결 후 활성화됩니다.\\n\\n학생: '+d.get('student')+'\\n연락처: '+d.get('phone')+'\\n학년: '+d.get('grade')+' '+(d.get('gradeDetail')||'')+'\\n과목: '+subjects+'\\n주소: '+d.get('address')+' '+(d.get('addressDetail')||'')+'\\n상담 가능 날짜: '+(d.get('consultDate')||'미정')+'\\n상담 가능 시간: '+(d.get('consultTime')||'미정'));});
+const SCRIPT_URL='https://script.google.com/macros/s/AKfycbzlYq-NMSVmPqohDBIYlzybmvkm1U_ft81j0PZUYiEYLzjYQtP0Ye-Mlzk2G2ProYXe/exec';
+document.getElementById('consultForm').addEventListener('submit',async function(e){
+  e.preventDefault();
+  const form=this;
+  if(!form.reportValidity())return;
+  const d=new FormData(form);
+  const selectedSubjects=d.getAll('subjects');
+  const other=(d.get('otherSubject')||'').trim();
+  if(other)selectedSubjects.push('기타: '+other);
+  const payload={
+    student:(d.get('student')||'').trim(),
+    phone:(d.get('phone')||'').trim(),
+    grade:d.get('grade')||'',
+    gradeDetail:d.get('gradeDetail')||'',
+    subjects:selectedSubjects.filter(x=>x!=='기타').join(', '),
+    otherSubject:other,
+    address:d.get('address')||'',
+    addressDetail:d.get('addressDetail')||'',
+    school:d.get('school')||'',
+    memo:d.get('memo')||'',
+    type:d.get('type')||'',
+    consultDate:d.get('consultDate')||'',
+    consultTime:d.get('consultTime')||''
+  };
+  const button=form.querySelector('button[type="submit"]');
+  const note=document.getElementById('formNote');
+  button.disabled=true;
+  button.textContent='신청 전송 중...';
+  note.textContent='상담 신청 정보를 전송하고 있어요.';
+  try{
+    const body=new URLSearchParams();
+    body.set('payload',JSON.stringify(payload));
+    await fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',body});
+    note.textContent='상담 신청 전송을 요청했어요. 접수 확인 후 연락드릴게요.';
+    note.style.color='green';
+    button.textContent='전송 요청 완료';
+    form.reset();
+    gradeDetailSelect.innerHTML='<option value="">학년 선택</option>';
+    otherSubjectInput.hidden=true;
+    closeConsult();
+    alert('상담 신청 전송을 요청했어요. 접수 확인 후 연락드릴게요.');
+  }catch(error){
+    note.textContent='전송에 실패했어요. 잠시 후 다시 신청해 주세요.';
+    note.style.color='red';
+    button.disabled=false;
+    button.textContent='무료 상담 신청하기';
+  }
+});
 </script>
 </body>
 </html>
