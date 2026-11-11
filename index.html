@@ -134,6 +134,34 @@ body.modal-open{overflow:hidden}
 .consult-modal *{max-width:100%;box-sizing:border-box}
 @media(max-width:540px){.modal-backdrop{padding:12px}.consult-modal{width:100%;max-height:calc(100dvh - 24px);padding:20px 18px 24px}}
 
+
+/* Review image + text carousel mockup */
+.review-carousel{max-width:900px;margin:0 auto}
+.review-track{position:relative;overflow:hidden;border-radius:16px}
+.review-slide{display:none;grid-template-columns:1fr 1fr;gap:0;background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;min-height:330px}
+.review-slide.is-active{display:grid;animation:reviewFade .35s ease}
+@keyframes reviewFade{from{opacity:.45;transform:translateX(12px)}to{opacity:1;transform:translateX(0)}}
+.review-image-placeholder{min-height:330px;padding:28px;background:linear-gradient(145deg,#e8f3ff,#d9eaff);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.review-placeholder-label{font-size:10px;font-weight:900;letter-spacing:.16em;color:#4d7cae}
+.review-placeholder-paper{width:min(100%,310px);min-height:205px;background:#fff;border:1px solid #d8e5f2;border-radius:10px;padding:24px 22px;box-shadow:0 12px 30px rgba(37,88,140,.09);display:flex;flex-direction:column;gap:13px}
+.review-placeholder-paper strong{font-size:15px;color:#355575;text-align:center;margin:8px 0}
+.review-placeholder-paper span{height:7px;border-radius:8px;background:#e7eef6;width:100%}
+.review-placeholder-paper span.short{width:65%}
+.review-placeholder-paper small{margin-top:auto;text-align:right;color:#91a4b8;font-size:10px}
+.review-copy{padding:42px 36px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;text-align:left}
+.review-tag{font-size:10px;font-weight:900;letter-spacing:.14em;color:#1685ff}
+.review-copy h3{font-size:21px;line-height:1.5;letter-spacing:-.04em;color:#203d5d;margin:13px 0 10px}
+.review-copy p{font-size:14px;line-height:1.85;color:#61788c;margin:0}
+.review-meta{font-size:12px;color:#8da1b5;margin-top:22px}
+.review-controls{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:22px}
+.review-arrow{width:38px;height:38px;border:1px solid #c9dced;border-radius:50%;background:#fff;color:#28649d;font-size:25px;line-height:1;cursor:pointer}
+.review-arrow:hover{background:#eaf4ff}
+.review-dots{display:flex;align-items:center;gap:8px}
+.review-dot{width:8px;height:8px;border:0;border-radius:50%;background:#c8d8e8;padding:0;cursor:pointer}
+.review-dot.is-active{width:22px;border-radius:8px;background:#1685ff}
+.review-demo-note{text-align:center;color:#91a1b1;font-size:11px;margin:12px 0 0}
+@media(max-width:640px){.review-slide{grid-template-columns:1fr}.review-image-placeholder{min-height:235px;padding:20px}.review-placeholder-paper{min-height:160px;padding:18px}.review-copy{padding:25px 22px}.review-copy h3{font-size:18px}.review-copy p{font-size:13px}}
+
 </style>
 </head>
 <body>
@@ -177,7 +205,25 @@ body.modal-open{overflow:hidden}
 <div class="step"><small>STEP 04</small><h3>수업 방향 및 일정 확정</h3><p>모의수업 결과를 바탕으로 수업 방향과 일정,<br>세부 사항을 충분히 협의한 뒤 정규 수업을 시작합니다.</p></div>
 </div></div></section>
 <section class="section" id="regions"><div class="container"><div class="section-head"><div class="section-label">NATIONWIDE TUTORING</div><h2>우리 동네에서도<br>맞춤 과외를 찾고 있나요?</h2><p>아래 거주하시는 지역을 클릭하시면<br>해당 지역 과외 수업 안내로 이동합니다.</p><div class="regions"><a href="/regions/seoul" aria-label="서울 과외 안내">서울</a><a href="/regions/gyeonggi" aria-label="경기 과외 안내">경기</a><a href="/regions/incheon" aria-label="인천 과외 안내">인천</a><a href="/regions/busan" aria-label="부산 과외 안내">부산</a><a href="/regions/daegu" aria-label="대구 과외 안내">대구</a><a href="/regions/daejeon" aria-label="대전 과외 안내">대전</a><a href="/regions/gwangju" aria-label="광주 과외 안내">광주</a><a href="/regions/ulsan" aria-label="울산 과외 안내">울산</a><a href="/regions/sejong" aria-label="세종 과외 안내">세종</a><a href="/regions/gangwon" aria-label="강원 과외 안내">강원</a><a href="/regions/chungcheong" aria-label="충청 과외 안내">충청</a><a href="/regions/jeolla" aria-label="전라 과외 안내">전라</a><a href="/regions/gyeongsang" aria-label="경상 과외 안내">경상</a><a href="/regions/jeju" aria-label="제주 과외 안내">제주</a></div></div></div></section>
-<section class="section soft" id="reviews"><div class="container"><div class="section-head"><div class="section-label">TUTORING REVIEWS</div><h2>과외 후기</h2><p>실제 수업 후기는 준비되는 대로 소개해 드릴 예정입니다.</p></div></div></section>
+<section class="section soft" id="reviews"><div class="container"><div class="section-head"><div class="section-label">TUTORING REVIEWS</div><h2>과외 후기</h2><p>실제 수업 후기와 학습 경험을 소개합니다.</p></div>
+<div class="review-carousel" aria-label="과외 후기 슬라이드">
+  <div class="review-track">
+    <article class="review-slide is-active">
+      <div class="review-image-placeholder"><span class="review-placeholder-label">REVIEW IMAGE</span><div class="review-placeholder-paper"><strong>실제 후기 이미지가 들어갈 공간</strong><span></span><span></span><span class="short"></span><small>학부모 · 학생 후기 캡처</small></div></div>
+      <div class="review-copy"><span class="review-tag">REAL REVIEW</span><h3>실제 후기 이미지와 문구를 함께 보여주세요.</h3><p>후기 캡처 이미지를 등록하면 이 영역에 이미지와 함께 후기 내용을 소개할 수 있어요.</p><span class="review-meta">후기 이미지 준비 중</span></div>
+    </article>
+    <article class="review-slide">
+      <div class="review-image-placeholder"><span class="review-placeholder-label">REVIEW IMAGE</span><div class="review-placeholder-paper"><strong>후기 캡처 이미지</strong><span></span><span></span><span class="short"></span><small>학부모 · 학생 후기 캡처</small></div></div>
+      <div class="review-copy"><span class="review-tag">REAL REVIEW</span><h3>학생의 학습 경험을 생생하게 전달해요.</h3><p>실제 후기 이미지와 확인된 내용을 바탕으로 이곳의 문구를 교체할 예정이에요.</p><span class="review-meta">후기 이미지 준비 중</span></div>
+    </article>
+    <article class="review-slide">
+      <div class="review-image-placeholder"><span class="review-placeholder-label">REVIEW IMAGE</span><div class="review-placeholder-paper"><strong>후기 이미지 등록 예정</strong><span></span><span></span><span class="short"></span><small>학부모 · 학생 후기 캡처</small></div></div>
+      <div class="review-copy"><span class="review-tag">REAL REVIEW</span><h3>이미지와 함께 신뢰할 수 있는 후기를 소개해요.</h3><p>실제 후기를 보내주시면 이미지와 문구를 자연스럽게 배치해 드릴게요.</p><span class="review-meta">후기 이미지 준비 중</span></div>
+    </article>
+  </div>
+  <div class="review-controls"><button type="button" class="review-arrow" id="reviewPrev" aria-label="이전 후기">‹</button><div class="review-dots" aria-label="후기 페이지"></div><button type="button" class="review-arrow" id="reviewNext" aria-label="다음 후기">›</button></div>
+  <p class="review-demo-note">현재는 디자인 시안이며, 실제 후기 이미지와 문구로 교체할 수 있어요.</p>
+</div></div></section>
 <section class="section soft" id="faq"><div class="container"><div class="section-head"><div class="section-label">FAQ</div><h2>상담 전에<br>많이 물어보시는 질문</h2></div><div class="faq">
 <details><summary>초등학생부터 고등학생까지 모두 상담할 수 있나요?</summary><p>네. 초등·중등·고등 과정 모두 상담할 수 있습니다. 학년과 과목, 지역, 학습 목표를 알려주시면 가능한 수업 방향을 확인해 안내합니다.</p></details>
 <details><summary>전국 어디에서나 수업을 받을 수 있나요?</summary><p>전국 지역의 과외 상담을 받고 있습니다. 다만 방문 수업 가능 여부는 지역과 과목, 선생님 일정에 따라 달라질 수 있으며 화상 수업도 상담할 수 있습니다.</p></details>
@@ -319,6 +365,24 @@ document.getElementById('consultForm').addEventListener('submit',async function(
     button.textContent='무료 상담 신청하기';
   }
 });
+
+const reviewSlides=[...document.querySelectorAll('.review-slide')];
+const reviewDotsWrap=document.querySelector('.review-dots');
+const reviewPrev=document.getElementById('reviewPrev');
+const reviewNext=document.getElementById('reviewNext');
+let reviewIndex=0,reviewTimer=null,reviewTouchStart=0;
+reviewSlides.forEach((slide,index)=>{const dot=document.createElement('button');dot.type='button';dot.className='review-dot'+(index===0?' is-active':'');dot.setAttribute('aria-label',(index+1)+'번째 후기 보기');dot.addEventListener('click',()=>showReview(index));reviewDotsWrap.appendChild(dot);});
+function showReview(index){reviewIndex=(index+reviewSlides.length)%reviewSlides.length;reviewSlides.forEach((slide,i)=>slide.classList.toggle('is-active',i===reviewIndex));[...reviewDotsWrap.children].forEach((dot,i)=>dot.classList.toggle('is-active',i===reviewIndex));}
+function startReviewTimer(){clearInterval(reviewTimer);reviewTimer=setInterval(()=>showReview(reviewIndex+1),5000);}
+reviewPrev.addEventListener('click',()=>{showReview(reviewIndex-1);startReviewTimer();});
+reviewNext.addEventListener('click',()=>{showReview(reviewIndex+1);startReviewTimer();});
+const reviewCarousel=document.querySelector('.review-carousel');
+reviewCarousel.addEventListener('mouseenter',()=>clearInterval(reviewTimer));
+reviewCarousel.addEventListener('mouseleave',startReviewTimer);
+reviewCarousel.addEventListener('touchstart',e=>{reviewTouchStart=e.changedTouches[0].clientX;clearInterval(reviewTimer);},{passive:true});
+reviewCarousel.addEventListener('touchend',e=>{const delta=e.changedTouches[0].clientX-reviewTouchStart;if(Math.abs(delta)>45)showReview(reviewIndex+(delta<0?1:-1));startReviewTimer();},{passive:true});
+startReviewTimer();
+
 </script>
 </body>
 </html>
