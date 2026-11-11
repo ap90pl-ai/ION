@@ -269,7 +269,7 @@ body.modal-open{overflow:hidden}
   title.textContent=district+' 선생님';
   const matched=samples.filter(t=>t.areas.includes(district));
   if(!matched.length){results.innerHTML='<div class="tutor-empty"><strong>'+district+' 등록 선생님을 준비 중입니다.</strong><p>현재 등록된 선생님이 없어요. 다른 지역을 검색해 주세요.</p></div>';return;}
-  results.innerHTML=matched.map(t=>'<article class="tutor-card"><span class="tutor-method-badge">🏠방문·🖥️화상 가능</span><div class="tutor-card-top"><div class="tutor-avatar">'+t.icon+'</div><div><h4>'+t.name+'</h4><div class="tutor-sub">'+t.major+' 전문 · '+t.grade+'</div><div class="tutor-sub">'+t.career+'</div></div></div><p><strong>수업 가능 지역</strong><br>'+t.areas+'</p><p><strong>집중 관리 학교</strong><br>'+t.schools+'</p><p>'+t.intro+'</p><span class="tutor-detail">무료 상담을 통해 수업 가능 일정과 세부 내용을 확인해 주세요.</span></article>').join('');
+  results.innerHTML=matched.map(t=>'<article class="tutor-card"><span class="tutor-method-badge">🏠방문·🖥️화상</span><div class="tutor-card-top"><div class="tutor-avatar">'+t.icon+'</div><div><h4>'+t.name+'</h4><div class="tutor-sub">'+t.major+' 전문 · '+t.grade+'</div><div class="tutor-sub">'+t.career+'</div></div></div><p><strong>수업 가능 지역</strong><br>'+t.areas+'</p><p><strong>집중 관리 학교</strong><br>'+t.schools+'</p><p>'+t.intro+'</p><span class="tutor-detail">무료 상담을 통해 수업 가능 일정과 세부 내용을 확인해 주세요.</span></article>').join('');
  }
  button.addEventListener('click',search);
  input.addEventListener('keydown',e=>{if(e.key==='Enter')search();});
