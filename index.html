@@ -128,6 +128,12 @@ body.modal-open{overflow:hidden}
 #consult .consult-grid>div:first-child h2,
 #consult .consult-grid>div:first-child .consult-copy{text-align:center}
 
+
+/* Keep consultation popup scrolling vertical only */
+.consult-modal{overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;touch-action:pan-y;box-sizing:border-box;max-width:100%}
+.consult-modal *{max-width:100%;box-sizing:border-box}
+@media(max-width:540px){.modal-backdrop{padding:12px}.consult-modal{width:100%;max-height:calc(100dvh - 24px);padding:20px 18px 24px}}
+
 </style>
 </head>
 <body>
