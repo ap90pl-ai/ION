@@ -186,7 +186,13 @@ body.modal-open{overflow:hidden}
 .managed-schools-heading strong{font-size:14px;color:#273449}
 .school-type-label{display:inline-flex;align-items:center;padding:4px 9px;border-radius:999px;background:#eaf3ff;color:#2463a6;font-size:12px;font-weight:700;line-height:1.4}
 .managed-schools-list{font-size:13px;line-height:1.7;color:#526174}
-@media(max-width:600px){.managed-schools-heading{gap:7px}.school-type-label{font-size:11px;padding:4px 7px}}
+@media(max-width:600px){
+.managed-schools{width:100%;margin:12px 0}
+.managed-schools-heading{display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:flex-start!important;flex-wrap:nowrap!important;gap:6px!important;margin-bottom:6px}
+.managed-schools-heading strong{display:inline-block!important;flex:0 0 auto!important;white-space:nowrap!important;font-size:13px!important}
+.school-type-label{display:inline-flex!important;flex:0 1 auto!important;align-items:center!important;white-space:nowrap!important;font-size:10px!important;padding:4px 6px!important;line-height:1.3!important}
+.managed-schools-list{font-size:12px;line-height:1.65}
+}
 </style>
 </head>
 <body>
